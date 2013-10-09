@@ -1,10 +1,44 @@
-<div class="dropdown" style="display:block;">
-  <!-- Link or button to toggle dropdown -->
-  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-    <li><a tabindex="-1" href="#">Action</a></li>
-    <li><a tabindex="-1" href="#">Another action</a></li>
-    <li><a tabindex="-1" href="#">Something else here</a></li>
-    <li class="divider"></li>
-    <li><a tabindex="-1" href="#">Separated link</a></li>
-  </ul>
+<center class="top-twenty">
+<div class="dashboard-container span6">
+	<div class="third-party-url">
+		<%= text_field_tag 'ds-url', nil, class: "input-block-level", placeholder: 'Enter URL here' %>
+	</div>
+	<div class="http-verbs" style="float: left;">
+		<%= select_tag 'http-method', options_for_select(@http_verbs.collect{ |u| [u[:name], u[:id]] }) %>
+	</div>
+
+	<div class="request-objects" style="float: right;">
+		<%= select_tag 'request-object-type', options_for_select(@object_types.collect{ |u| [u[:name], u[:id]] }) %>
+	</div>
+
+	<div class="request-header-container" style="float: left;" id="req-header">
+		<%= label_tag 'req-header-content', 'Request header: ' %>
+		<%= text_area_tag  'req-header-content' %>
+	</div>
+
+	<div class="request-body-container" id="post-req-body">
+		<%= label_tag 'post-req-body-content', 'Request body: ' %>
+		<%= text_area_tag  'post-req-body-content' %>
+	</div>
+
+	<div class="request-timeout" style="float: left;" id="req-timeout-container">
+		<%= label_tag 'req-timeout-value', 'Request timeout: ' %>
+		<%= text_field_tag 'req-timeout-value' %>
+	</div>
+
+	<div class="response-header-container" id="res-header">
+		<%= label_tag 'res-header-content', 'Response header: ' %>
+		<%= text_area_tag  'res-header-content' %>
+	</div>
+
+	<div class="response-body-container" style="float: left;" id="res-header">
+		<%= label_tag 'res-body-content', 'Response body: ' %>
+		<%= text_area_tag  'res-body-content' %>
+	</div>
+
+	<div class="req-button" style="float: right;margin-top: 33px;">
+		<%= submit_tag "Send", class: "btn btn-success" %>
+	</div>
+	
 </div>
+</center>

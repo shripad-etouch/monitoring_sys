@@ -25,7 +25,7 @@ end
 
 gem 'jquery-rails'
 
-group :test do
+group :development do
 	gem 'quiet_assets', '>= 1.0.1'
 	gem 'rails_best_practices'
 end
