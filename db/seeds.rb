@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+## This will add the verbs to verbs table
+verb = Verb.first
+Verb.create([{ name: "GET"},{ name: "POST"},{ name: "DELETE"},{ name: "PUT"}]) if verb.blank?
+
