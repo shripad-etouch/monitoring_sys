@@ -10,3 +10,5 @@
 verb = Verb.first
 Verb.create([{ name: "GET"},{ name: "POST"},{ name: "DELETE"},{ name: "PUT"}]) if verb.blank?
 
+response_object = ResponseObject.first
+ResponseObject.create([{ name: "JSON"},{ name: "SOAP"}]) if response_object.blank?
