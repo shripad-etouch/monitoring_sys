@@ -1,3 +1,5 @@
-class RequestObjectType < ActiveRecord::Base
-  attr_accessible :name
+class RequestObjectType
+  #attr_accessible :name
+  include Mongoid::Document
+  field :name
 end

@@ -1,3 +1,5 @@
-class Verb < ActiveRecord::Base
-  attr_accessible :name
+class Verb
+  #attr_accessible :name
+  include Mongoid::Document
+  field :name
 end
