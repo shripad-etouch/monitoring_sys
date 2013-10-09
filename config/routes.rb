@@ -1,4 +1,6 @@
 MonitoringSys::Application.routes.draw do
+  get "montioring_sys/index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
