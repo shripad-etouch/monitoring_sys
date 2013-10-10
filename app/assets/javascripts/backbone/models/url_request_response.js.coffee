@@ -4,3 +4,4 @@ class MonitoringSys.Models.UrlRequestResponse extends Backbone.Model
 class MonitoringSys.Collections.UrlRequestResponsesCollection extends Backbone.Collection
   model: MonitoringSys.Models.UrlRequestResponse
   url: '/url_request_responses'
+

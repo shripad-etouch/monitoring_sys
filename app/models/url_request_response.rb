@@ -1,5 +1,6 @@
 class UrlRequestResponse
   include Mongoid::Document
+  require 'mongo_patch_id'
   field :url, type: String
   field :verb_id, type: Integer
   field :request_header, type: String
