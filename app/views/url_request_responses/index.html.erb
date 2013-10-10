@@ -1,0 +1,8 @@
+<div id="url_request_responses"></div>
+
+<script type="text/javascript">
+  $(function() {
+    window.router = new MonitoringSys.Routers.UrlRequestResponsesRouter({url_request_responses: <%= @url_request_responses.to_json.html_safe -%>});
+    Backbone.history.start();
+  });
+</script>

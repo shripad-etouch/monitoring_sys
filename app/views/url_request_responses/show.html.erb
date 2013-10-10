@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Url:</b>
+  <%= @url_request_response.url %>
+</p>
+
+<p>
+  <b>Verb:</b>
+  <%= @url_request_response.verb_id %>
+</p>
+
+<p>
+  <b>Request header:</b>
+  <%= @url_request_response.request_header %>
+</p>
+
+<p>
+  <b>Request body:</b>
+  <%= @url_request_response.request_body %>
+</p>
+
+<p>
+  <b>Response header:</b>
+  <%= @url_request_response.response_header %>
+</p>
+
+<p>
+  <b>Response body:</b>
+  <%= @url_request_response.response_body %>
+</p>
+
+<p>
+  <b>Timeout:</b>
+  <%= @url_request_response.timeout %>
+</p>
+
+<p>
+  <b>Request object type:</b>
+  <%= @url_request_response.request_object_type_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_url_request_response_path(@url_request_response) %> |
+<%= link_to 'Back', url_request_responses_path %>

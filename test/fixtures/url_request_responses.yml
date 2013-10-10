@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  url: MyString
+  verb_id: 1
+  request_header: MyText
+  request_body: MyText
+  response_header: MyText
+  response_body: MyText
+  timeout: 1
+  request_object_type_id: 1
+
+two:
+  url: MyString
+  verb_id: 1
+  request_header: MyText
+  request_body: MyText
+  response_header: MyText
+  response_body: MyText
+  timeout: 1
+  request_object_type_id: 1

@@ -1,0 +1,51 @@
+<h1>Edit URL</h1>
+
+<form id="edit-url_request_response" name="url_request_response">
+
+  <div class="field">
+    <label for="url"> URL:</label>
+    <input type="text" name="url" id="url" value="<%= url %>" >
+  </div>
+
+  <div class="field">
+    <label for="verb_id"> Verb:</label>
+    <input type="text" name="verb_id" id="verb_id" value="<%= verb_id %>">
+  </div>
+
+  <div class="field">
+    <label for="request_header"> Request Header:</label>
+    <input type="text" name="request_header" id="request_header" value="<%= request_header %>">
+  </div>
+
+  <div class="field">
+    <label for="request_body"> Request Body:</label>
+    <input type="text" name="request_body" id="request_body" value="<%= request_body %>">
+  </div>
+
+  <div class="field">
+    <label for="response_header"> Response Header:</label>
+    <input type="text" name="response_header" id="response_header" value="<%= response_header %>">
+  </div>
+
+  <div class="field">
+    <label for="response_body"> Response Body:</label>
+    <input type="text" name="response_body" id="response_body" value="<%= response_body %>">
+  </div>
+
+  <div class="field">
+    <label for="timeout"> Timeout:</label>
+    <input type="text" name="timeout" id="timeout" value="<%= timeout %>">
+  </div>
+
+  <div class="field">
+    <label for="request_object_type_id"> Object:</label>
+    <input type="text" name="request_object_type_id" id="request_object_type_id" value="<%= request_object_type_id %>">
+  </div>
+
+  <div class="actions">
+    <input type="submit" value="Update URL" />
+  </div>
+
+</form>
+
+<a href="#/index">Back</a>

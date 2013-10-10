@@ -28,8 +28,10 @@ gem 'jquery-rails'
 group :development do
 	gem 'quiet_assets', '>= 1.0.1'
 	gem 'rails_best_practices'
+	gem "bullet"
 end
 
+gem "rails-backbone"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

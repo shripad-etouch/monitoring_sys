@@ -33,6 +33,8 @@ GEM
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.0.4)
+    bullet (4.6.0)
+      uniform_notifier
     code_analyzer (0.4.3)
       sexp_processor
     coffee-rails (3.2.2)
@@ -43,12 +45,13 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     colored (1.2)
+    ejs (1.1.1)
     erubis (2.7.0)
     execjs (2.0.2)
     hike (1.2.3)
     i18n (0.6.5)
     journey (1.0.4)
-    jquery-rails (3.0.4)
+    jquery-rails (2.1.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.0)
@@ -82,6 +85,11 @@ GEM
       activesupport (= 3.2.14)
       bundler (~> 1.0)
       railties (= 3.2.14)
+    rails-backbone (0.9.10)
+      coffee-script (~> 2.2.0)
+      ejs (~> 1.1.1)
+      jquery-rails (~> 2.1.3)
+      railties (>= 3.1.0)
     rails_best_practices (1.14.4)
       activesupport
       awesome_print
@@ -123,17 +131,20 @@ GEM
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    uniform_notifier (1.3.0)
 
 PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
   bootstrap-sass
+  bullet
   coffee-rails (~> 3.2.1)
   jquery-rails
   mongoid
   quiet_assets (>= 1.0.1)
   rails (= 3.2.14)
+  rails-backbone
   rails_best_practices
   sass-rails (~> 3.2.3)
   uglifier (>= 1.0.3)
