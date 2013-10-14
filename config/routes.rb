@@ -1,8 +1,8 @@
 MonitoringSys::Application.routes.draw do
+  
   resources :url_request_responses
-
-
   get "montioring_sys/index"
+  resources :running_details, only: [:index]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
