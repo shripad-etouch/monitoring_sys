@@ -1,9 +1,9 @@
 class Schedule
   include Mongoid::Document
-  field :url_id, type: String
+  #field :url_id, type: String
   field :schedule, type: Date
   field :success_status, type: String
-
+  belongs_to :url_reuest_response
   # Read all data for current minute from schedules table,
   # and run those jobs.
 
