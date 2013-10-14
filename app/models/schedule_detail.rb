@@ -1,5 +1,8 @@
 class ScheduleDetail
   include Mongoid::Document
-  field :url_id, type: Integer
-  field :executed_time, type: Date
+  field :start_time, type: DateTime
+  field :end_time, type: DateTime
+  field :status_result, type: String
+  field :response_message, type: String
+  belongs_to :schedule
 end
