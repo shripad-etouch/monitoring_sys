@@ -32,8 +32,8 @@ class Schedule
             # Http get request call
             puts request_method_type["name"]
             #check if request_header exsist, is yes set to headers in request.
-            if !url["request_header"].blank?
-          	  response = HTTParty.get(url["url"], :headers => url["request_header"])
+            if !eval(url["request_header"]).blank?
+          	  response = HTTParty.get(url["url"], :headers => eval(url["request_header"]))
             else
               response = HTTParty.get(url["url"])
             end
@@ -41,13 +41,13 @@ class Schedule
             
           #POST request      
           else
-            if !url["request_header"].blank? && !url["request_body"].blank?
-              response = HTTParty.post(url["url"], :query => url["request_header"], 
-                                       :body => url["request_body"])
-            elsif !url["request_header"].blank? && url["request_body"].blank?
-              response = HTTParty.post(url["url"], :query => url["request_header"])
-            elsif url["request_header"].blank? && !url["request_body"].blank?
-              response = HTTParty.post(url["url"], :body => url["request_body"])
+            if !eval(url["request_header"]).blank? && !eval(url["request_body"]).blank?
+              response = HTTParty.post(url["url"], :headers => eval(url["request_header"]), 
+                                       :query => eval(url["request_body"]))
+            elsif !eval(url["request_header"]).blank? && eval(url["request_body"]).blank?
+              response = HTTParty.post(url["url"], :headrs => eval(url["request_header"]))
+            elsif eval(url["request_header"]).blank? && !eval(url["request_body"]).blank?
+              response = HTTParty.post(url["url"], :query => eval(url["request_body"]))
             else
               response = HTTParty.post(url["url"])
             end
