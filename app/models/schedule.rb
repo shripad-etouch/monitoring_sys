@@ -41,16 +41,26 @@ class Schedule
             
           #POST request      
           else
+            # if both request header and request body exists add it to post call.
             if !eval(url["request_header"]).blank? && !eval(url["request_body"]).blank?
               response = HTTParty.post(url["url"], :headers => eval(url["request_header"]), 
                                        :query => eval(url["request_body"]))
+
+            # if only request header exists and request body does not exists,
+            # add only request headers to post call.
             elsif !eval(url["request_header"]).blank? && eval(url["request_body"]).blank?
               response = HTTParty.post(url["url"], :headrs => eval(url["request_header"]))
+
+            # if only request body exists and request header does not exists,
+            # add only request body to post call.
             elsif eval(url["request_header"]).blank? && !eval(url["request_body"]).blank?
               response = HTTParty.post(url["url"], :query => eval(url["request_body"]))
             else
+
+            # if both request header and request body does not exists, hit direct URL.
               response = HTTParty.post(url["url"])
             end
+            
           end
 
           # Save http response headers and response body to database on success.
