@@ -7,69 +7,109 @@ class Schedule
   # Read all data for current minute from schedules table,
   # and run those jobs.
 
-  def self.schedule_jobs
-
+  def self.fetch_schedules_and_run
     # Create instance of rufus scheduler
-  	scheduler = Rufus::Scheduler.new
-
+    scheduler = Rufus::Scheduler.new
     # Fetch all schedules from database for the next 59 seconds.
-  	#all_schedules = Schedule.where(:schedule => (Time.now)..(Time.now + 59))
-    all_schedules = Schedule.where(:schedule => (Time.now.utc - 1000000)..(Time.now.utc ))
+  	all_schedules = Schedule.where(:schedule => (Time.now)..(Time.now + 59))
 
-    # Fetch all url's data for fetched schedules from database.
-  	urls_data =  UrlRequestResponse.find(all_schedules.collect(&:url_request_response_id))
+    # Array of objects, each individual object contains one to one mapping of
+    # schedule object and url object.
+  	urls_data =  Array.new
+
+    # Here fetching urls individually for each schedule,
+    # because same url may repeat for another schedule.
+
+    all_schedules.each do |sch|
+      obj = {}
+      obj["schedule_data"] = sch
+      obj["url_data"] = UrlRequestResponse.find(sch["url_request_response_id"])
+      urls_data.push(obj)
+    end
 
     # Iterate over fetched schedules from database 
     # and schedule the individual schedule to run at a given time. 
-    urls_data.each_with_index do |url, index|
-        #scheduler.at(all_schedules[index].schedule.to_s) do
-        scheduler.every("10s") do
-          puts url
-          # Fetch the http request method type from verbs table.
-          request_method_type = Verb.find(url["verb_id"])
-          # Check if http request type is get or post and give appropriate call.
-          if request_method_type["name"] == "GET" 
-            # Http get request call
-            puts request_method_type["name"]
-            #check if request_header exsist, is yes set to headers in request.
-            if !eval(url["request_header"]).blank?
-          	  response = HTTParty.get(url["url"], :headers => eval(url["request_header"]))
-            else
-              response = HTTParty.get(url["url"])
-            end
-
-            
-          #POST request      
-          else
-            # if both request header and request body exists add it to post call.
-            if !eval(url["request_header"]).blank? && !eval(url["request_body"]).blank?
-              response = HTTParty.post(url["url"], :headers => eval(url["request_header"]), 
-                                       :query => eval(url["request_body"]))
-
-            # if only request header exists and request body does not exists,
-            # add only request headers to post call.
-            elsif !eval(url["request_header"]).blank? && eval(url["request_body"]).blank?
-              response = HTTParty.post(url["url"], :headrs => eval(url["request_header"]))
-
-            # if only request body exists and request header does not exists,
-            # add only request body to post call.
-            elsif eval(url["request_header"]).blank? && !eval(url["request_body"]).blank?
-              response = HTTParty.post(url["url"], :query => eval(url["request_body"]))
-            else
-
-            # if both request header and request body does not exists, hit direct URL.
-              response = HTTParty.post(url["url"])
-            end
-            
-          end
-
-          # Save http response headers and response body to database on success.
-          url.request_responses.create(:response_header => response.headers,
-                                       :response_body => response.body)
-        end
+    urls_data.each do |obj|
+      self.schedule_job(obj, scheduler, obj["schedule_data"]["schedule"])
     end
-    rescue => e
-      p e.message 
+    
   end
+
+  # Shedule individual jobs.
+  def self.schedule_job(obj, scheduler, schedule_at)
+    scheduler.at(schedule_at.to_s) do
+      # Job execution start time.
+      ScheduleDetail.create(:start_time => Time.now, :schedule => obj["schedule_data"])
+      # Fetch the http request method type from verbs table.
+      request_method_type = Verb.find(obj["url_data"]["verb_id"])
+
+      # Here adding one custom header for each request, 
+      # which will be used to check response against the request.
+      if obj["url_data"]["request_header"].blank?
+          obj["url_data"]["request_header"] = 
+            "{'X-Schedule-for' => \'#{obj['schedule_data']['_id']}\'}"
+      else
+          obj["url_data"]["request_header"] = 
+            obj["url_data"]["request_header"][0...-1] + \
+            ", 'X-Schedule-for' => \'" + obj["schedule_data"]["_id"] + "\'}"
+      end
+
+      # Check if http request type is get or post and give appropriate call.
+      if request_method_type["name"] == "GET" 
+        # Http get request call
+        response = HTTParty.get(obj["url_data"]["url"], :headers => eval(obj["url_data"]["request_header"]))
+        
+      #POST request      
+      else
+        # if both request header and request body exists add it to post call.
+        if !obj["url_data"]["request_header"].blank? && !obj["url_data"]["request_body"].blank?
+          response = HTTParty.post(obj["url_data"]["url"], :headers => eval(obj["url_data"]["request_header"]), 
+                                   :query => eval(obj["url_data"]["request_body"]))
+
+        # if only request header exists and request body does not exists,
+        # add only request headers to post call.
+        elsif !obj["url_data"]["request_header"].blank? && obj["url_data"]["request_body"].blank?
+          response = HTTParty.post(obj["url_data"]["url"], :headrs => eval(obj["url_data"]["request_header"]))
+        end
+      end
+
+      # Update database on success
+      self.update_database_on_success(response, obj)
+    end
+    rescue Timeout::Error
+      message = "Timed out request to #{obj["url_data"]["url"]}, will be retrird after 5 minute"
+      self.handle_errors(message, obj, scheduler)
+    rescue
+      message = "Unable to serve the request to #{obj["url_data"]["url"]}, will be retrird after 5 minutes"
+      self.handle_errors(message, obj, scheduler)
+  end
+
+  # This method will take care of inserting and updating database on success.
+  def self.update_database_on_success(response, obj)
+      # read the X-Schedule-for from request headers of response object.
+      custom_header =  response.request.instance_variable_get(:@options)[:headers]["X-Schedule-for"]
+      # Fetch respective record from schedule_details table and update with other fields.
+      schedule_detail = ScheduleDetail.where(:schedule_id => custom_header)
+      # Update schedule_details table once response is received.
+      schedule_detail[0].update_attributes(:end_time => Time.now, 
+                                           :status_result => response.headers["status"],
+                                           :response_message => "Request succeeded") 
+      # Save http response headers and response body to database on success.
+      obj["url_data"].request_responses.create(:response_header => response.headers,
+                                               :response_body => response.body)
+  end
+
+  # Handle error responses and re-schedule job after 5 minutes.
+  def self.handle_errors(message, obj, scheduler)
+    # Fetch respective record from schedule_details table and update with other fields.
+    schedule_detail = ScheduleDetail.where(:schedule_id => obj["schedule_data"]["_id"])
+    # Update schedule_details table once response is received.
+    schedule_detail[0].update_attributes(:end_time => Time.now, 
+                                         :status_result => "Failed",
+                                         :response_message => message)
+    # Re-schedule after 5 minutes.
+    self.schedule_job(obj, scheduler, obj["schedule_data"]["schedule"] + 300)
+  end
+
 end
     
