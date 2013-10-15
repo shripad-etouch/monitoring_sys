@@ -31,16 +31,31 @@ class Schedule
           if request_method_type["name"] == "GET" 
             # Http get request call
             puts request_method_type["name"]
-          	response = HTTParty.get(url["url"])
+            #check if request_header exsist, is yes set to headers in request.
+            if !url["request_header"].blank?
+          	  response = HTTParty.get(url["url"], :headers => url["request_header"])
+            else
+              response = HTTParty.get(url["url"])
+            end
 
-            # Save http response headers and response body to database on success.
-           
-            url.request_responses.create(:response_header => response.headers,
-                                         :response_body => response.body)
-                
+            
+          #POST request      
           else
-            # TODO - Http post request call
+            if !url["request_header"].blank? && !url["request_body"].blank?
+              response = HTTParty.post(url["url"], :query => url["request_header"], 
+                                       :body => url["request_body"])
+            elsif !url["request_header"].blank? && url["request_body"].blank?
+              response = HTTParty.post(url["url"], :query => url["request_header"])
+            elsif url["request_header"].blank? && !url["request_body"].blank?
+              response = HTTParty.post(url["url"], :body => url["request_body"])
+            else
+              response = HTTParty.post(url["url"])
+            end
           end
+
+          # Save http response headers and response body to database on success.
+          url.request_responses.create(:response_header => response.headers,
+                                       :response_body => response.body)
         end
     end
     rescue => e
