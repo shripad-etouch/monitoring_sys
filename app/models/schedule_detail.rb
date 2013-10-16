@@ -5,4 +5,7 @@ class ScheduleDetail
   field :status_result, type: String
   field :response_message, type: String
   belongs_to :schedule
+  delegate :schedule, :success_status, to: :schedule, prefix: true
+
+  scope :include_associated_class, includes(:schedule)
 end

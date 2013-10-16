@@ -1,5 +1,5 @@
 class RunningDetailsController < ApplicationController
   def index
-  	@running_details = []
+  	@schedule_details = ScheduleDetail.include_associated_class.paginate(page: params[:page], per_page: 5)
   end
 end

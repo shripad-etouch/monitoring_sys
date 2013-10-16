@@ -1,17 +1,5 @@
 <h3>Running Details</h3>
-
-<table>
-  <tbody>
-    <tr>
-     <th>URL</th>
-     <th>Scheduled On</th>
-     <th>Expected Status</th>
-     <th>Timeout</th>     
-     <th>Start Time</th>
-     <th>End Time</th>
-     <th>Actual Status</th>
-    </tr>
-    <%= render partial: "running_detail", locals: {running_details: @running_details} %>
-  </tbody>
-</table>
+<div id="running_status">
+    <%= render partial: "running_detail", locals: {schedule_details: @schedule_details} %>
+</div>
 

@@ -6,7 +6,11 @@ class UrlRequestResponse
   field :request_header, type: String
   field :request_body, type: String
   belongs_to :verb
+  delegate :name, to: :verb, prefix: true
+
   belongs_to :request_object_type
+  delegate :name, to: :request_object_type, prefix: true
+
   has_many :schedules
   has_many :request_responses
 end

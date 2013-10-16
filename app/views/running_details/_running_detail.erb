@@ -1,9 +1,29 @@
-<tr>
- <td>1</td>
- <td>2</td>
- <td>3</td>
- <td>4</td>     
- <td>4</td>
- <td>5</td>
- <td>6</td>
-</tr>
+<table>
+  <tbody>
+    <tr>
+     <th>URL</th>
+     <th>Verb</th>
+     <th>Request Type</th>
+     <th>Scheduled On</th>
+     <th>Expected Status</th>
+     <th>Timeout</th>     
+     <th>Start Time</th>
+     <th>End Time</th>
+     <th>Actual Status</th>
+  	</tr>
+  </tbody>
+<% schedule_details.each do |schedule_detail|%>
+	<tr>
+	 <td><%= schedule_detail.schedule.url_request_response.url %></td>
+	 <td><%= schedule_detail.schedule.url_request_response.verb_name %></td>
+	 <td><%= schedule_detail.schedule.url_request_response.request_object_type_name %></td>
+	 <td><%= schedule_detail.schedule_schedule.to_s(:time_only)%></td>
+	 <td><%= schedule_detail.schedule_success_status %></td>
+	 <td><%= schedule_detail.schedule.url_request_response.timeout %></td>
+	 <td><%= schedule_detail.start_time.to_s(:full_friendly) %></td>
+	 <td><%= schedule_detail.end_time %></td>
+	 <td><%= schedule_detail.status_result %></td>
+	</tr>
+<% end %>
+</table>
+<%= will_paginate @schedule_details %>
