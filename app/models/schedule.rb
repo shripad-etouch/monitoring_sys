@@ -8,10 +8,12 @@ class Schedule
   # and run those jobs.
 
   def self.fetch_schedules_and_run
+    puts "in..................................."
     # Create instance of rufus scheduler
     scheduler = Rufus::Scheduler.new
     # Fetch all schedules from database for the next 59 seconds.
-  	all_schedules = Schedule.where(:schedule => (Time.now)..(Time.now + 59))
+  	all_schedules = Schedule.where(:schedule => (Time.now)..(Time.now + 59)) #During testing comment this line
+    #all_schedules = Schedule.where(:schedule => (Time.now - 500000)..(Time.now)) #During testing uncomment this line
 
     # Array of objects, each individual object contains one to one mapping of
     # schedule object and url object.
@@ -37,7 +39,8 @@ class Schedule
 
   # Shedule individual jobs.
   def self.schedule_job(obj, scheduler, schedule_at)
-    scheduler.at(schedule_at.to_s) do
+    scheduler.at(schedule_at.to_s) do #During testing comment this line
+    #scheduler.every("10s") do #During testing uncomment this line
       # Job execution start time.
       ScheduleDetail.create(:start_time => Time.now, :schedule => obj["schedule_data"])
       # Fetch the http request method type from verbs table.
@@ -45,31 +48,35 @@ class Schedule
 
       # Here adding one custom header for each request, 
       # which will be used to check response against the request.
-      if obj["url_data"]["request_header"].blank?
-          obj["url_data"]["request_header"] = 
+      custom_header = obj["url_data"]["request_header"]
+      if custom_header.blank?
+          custom_header = 
             "{'X-Schedule-for' => \'#{obj['schedule_data']['_id']},#{obj["url_data"]['_id']}\'}"
       else
-          obj["url_data"]["request_header"] = 
-            obj["url_data"]["request_header"][0...-1] + \
+          custom_header = 
+            custom_header[0...-1] + \
             ", 'X-Schedule-for' => \'" + obj["schedule_data"]["_id"] + "," + obj["url_data"]['_id'] + "\'}"
       end
-
+      puts request_method_type["name"]
+      puts obj["url_data"]["request_header"]
+      puts "custom_header"
+      puts custom_header
       # Check if http request type is get or post and give appropriate call.
       if request_method_type["name"] == "GET" 
         # Http get request call
-        response = HTTParty.get(obj["url_data"]["url"], :headers => eval(obj["url_data"]["request_header"]))
+        response = HTTParty.get(obj["url_data"]["url"], :headers => eval(custom_header))
         
       #POST request      
       else
         # if both request header and request body exists add it to post call.
-        if !obj["url_data"]["request_header"].blank? && !obj["url_data"]["request_body"].blank?
-          response = HTTParty.post(obj["url_data"]["url"], :headers => eval(obj["url_data"]["request_header"]), 
+        if !custom_header.blank? && !obj["url_data"]["request_body"].blank?
+          response = HTTParty.post(obj["url_data"]["url"], :headers => eval(custom_header), 
                                    :query => eval(obj["url_data"]["request_body"]))
 
         # if only request header exists and request body does not exists,
         # add only request headers to post call.
-        elsif !obj["url_data"]["request_header"].blank? && obj["url_data"]["request_body"].blank?
-          response = HTTParty.post(obj["url_data"]["url"], :headrs => eval(obj["url_data"]["request_header"]))
+        elsif !custom_header.blank? && obj["url_data"]["request_body"].blank?
+          response = HTTParty.post(obj["url_data"]["url"], :headrs => eval(custom_header))
         end
       end
 
@@ -90,10 +97,14 @@ class Schedule
       custom_header =  response.request.instance_variable_get(:@options)[:headers]["X-Schedule-for"]
       # Fetch respective record from schedule_details table and update with other fields.
       schedule_detail = ScheduleDetail.where(:schedule_id => custom_header.split(",")[0])
+      puts "before"
+      puts schedule_detail[0]
       # Update schedule_details table once response is received.
       schedule_detail[0].update_attributes(:end_time => Time.now, 
                                            :status_result => response.headers["status"],
                                            :response_message => "Request succeeded") 
+      puts "after"
+      puts schedule_detail[0]
       # Save http response headers and response body to database on success.
       RequestResponse.create(:response_header => response.headers,
                              :response_body => response.body,

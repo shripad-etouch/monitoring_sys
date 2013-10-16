@@ -5,5 +5,5 @@ scheduler = Rufus::Scheduler.new
 # for jobs to run.
 
 scheduler.every("1m") do
-   Schedule.fetch_schedules_and_run
+   #Schedule.fetch_schedules_and_run
 end 
