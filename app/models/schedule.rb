@@ -47,11 +47,11 @@ class Schedule
       # which will be used to check response against the request.
       if obj["url_data"]["request_header"].blank?
           obj["url_data"]["request_header"] = 
-            "{'X-Schedule-for' => \'#{obj['schedule_data']['_id']}\'}"
+            "{'X-Schedule-for' => \'#{obj['schedule_data']['_id']},#{obj["url_data"]['_id']}\'}"
       else
           obj["url_data"]["request_header"] = 
             obj["url_data"]["request_header"][0...-1] + \
-            ", 'X-Schedule-for' => \'" + obj["schedule_data"]["_id"] + "\'}"
+            ", 'X-Schedule-for' => \'" + obj["schedule_data"]["_id"] + "," + obj["url_data"]['_id'] + "\'}"
       end
 
       # Check if http request type is get or post and give appropriate call.
@@ -74,7 +74,7 @@ class Schedule
       end
 
       # Update database on success
-      self.update_database_on_success(response, obj)
+      self.update_database_on_success(response)
     end
     rescue Timeout::Error
       message = "Timed out request to #{obj["url_data"]["url"]}, will be retrird after 5 minute"
@@ -85,18 +85,20 @@ class Schedule
   end
 
   # This method will take care of inserting and updating database on success.
-  def self.update_database_on_success(response, obj)
+  def self.update_database_on_success(response)
       # read the X-Schedule-for from request headers of response object.
       custom_header =  response.request.instance_variable_get(:@options)[:headers]["X-Schedule-for"]
       # Fetch respective record from schedule_details table and update with other fields.
-      schedule_detail = ScheduleDetail.where(:schedule_id => custom_header)
+      schedule_detail = ScheduleDetail.where(:schedule_id => custom_header.split(",")[0])
       # Update schedule_details table once response is received.
       schedule_detail[0].update_attributes(:end_time => Time.now, 
                                            :status_result => response.headers["status"],
                                            :response_message => "Request succeeded") 
       # Save http response headers and response body to database on success.
-      obj["url_data"].request_responses.create(:response_header => response.headers,
-                                               :response_body => response.body)
+      RequestResponse.create(:response_header => response.headers,
+                             :response_body => response.body,
+                             :schedule => schedule_detail[0],
+                             :url_request_response => UrlRequestResponse.find(custom_header.split(",")[1]))
   end
 
   # Handle error responses and re-schedule job after 5 minutes.
