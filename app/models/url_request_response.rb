@@ -2,15 +2,13 @@ class UrlRequestResponse
   include Mongoid::Document
   require 'mongo_patch_id'
   field :url, type: String
-  field :timeout, type: String
+  field :http_verb, type: String
   field :request_header, type: String
   field :request_body, type: String
-  belongs_to :verb
-  delegate :name, to: :verb, prefix: true
-
-  belongs_to :request_object_type
-  delegate :name, to: :request_object_type, prefix: true
-
-  has_many :schedules
-  has_many :request_responses
+  field :expected_response_header, type: String
+  field :expected_response_body, type: String
+  field :timeout, type: String
+  field :object_type, type: String
+  field :time_to_run, type: DateTime
+  has_many :schedule_detail
 end
