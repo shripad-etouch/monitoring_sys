@@ -8,7 +8,7 @@ namespace :scheduler_task do
     # to read data from schedules table and check 
     # for jobs to run.
     scheduler.every("1m") do
-       schedule = Schedule.new
+       schedule = ScheduleDetail.new
        schedule.fetch_schedules_and_run
     end
     scheduler.join

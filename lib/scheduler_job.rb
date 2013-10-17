@@ -7,8 +7,8 @@ module SchedulerJob
     scheduler = Rufus::Scheduler.new
 
     # Fetch all schedules from database for the next 59 seconds.
-  	urls_data = UrlRequestResponse.where(:time_to_run => (Time.now)..(Time.now + 59)) #During testing comment this line
-    #urls_data = UrlRequestResponse.where(:time_to_run => (Time.now - 500000)..(Time.now)) #During testing uncomment this line
+  	#urls_data = UrlRequestResponse.where(:time_to_run => (Time.now)..(Time.now + 59)) #During testing comment this line
+    urls_data = UrlRequestResponse.all#where(:time_to_run => (Time.now - 500000)..(Time.now)) #During testing uncomment this line
 
     # Iterate over fetched schedules from database 
     # and schedule the individual schedule to run at a given time. 
@@ -20,10 +20,11 @@ module SchedulerJob
 
   # Shedule individual jobs.
   def schedule_job(obj, scheduler, schedule_at)
-    scheduler.at(schedule_at.to_s) do #During testing comment this line
+    #scheduler.at(schedule_at.to_s) do #During testing comment this line
+    scheduler.every("10s") do #During testing uncomment this line
       # Same job schedule it run to after one hour
       obj.update_attributes(:time_to_run => Time.parse(obj.time_to_run.to_s) + 60 * 60) #1 hour
-      #scheduler.every("10s") do #During testing uncomment this line
+      
       # Job execution start time.
       schedule_detail = ScheduleDetail.create(:start_time => Time.now, :url_request_response => obj)
       # Here adding one custom header for each request, 
@@ -32,7 +33,7 @@ module SchedulerJob
       if custom_header.blank?
           custom_header = "{'X-Schedule-for' => \'#{schedule_detail['_id']},#{obj['_id']}\'}"
       else
-          custom_header = custom_header[0...-1] + ", 'X-Schedule-for' => \'" + schedule_detail['_id'] + obj['_id'] + "\'}"
+          custom_header = custom_header[0...-1] + ", 'X-Schedule-for' => \'" + schedule_detail['_id'] + "," + obj['_id'] + "\'}"
       end
       # Check if http request type is get or post and give appropriate call.
       if obj["http_verb"] == "GET" 
@@ -75,8 +76,8 @@ module SchedulerJob
       # Check the response header and response body mathces with the 
       # expected response header and response body and 
       # Update schedule_details table accordingly.
-      if !response.headers.eql? current_url_data.expected_response_header || 
-         !response.body.eql? current_url_data.expected_response_body
+      if !response.headers.eql?(current_url_data.expected_response_header) || 
+         !response.body.eql?(current_url_data.expected_response_body)
         schedule_detail.update_attributes(:end_time => Time.now, 
                                           :status_result => !response.headers["status"].nil? ? response.headers["status"] : 
                                                                                                "Response status is empty",
@@ -97,4 +98,5 @@ module SchedulerJob
                                       :response_message => message)
     # Re-schedule after 5 minutes.
     schedule_job(obj, scheduler, Time.parse(obj.time_to_run.to_s) + 60 * 5) # 5 minutes
+  end
 end
