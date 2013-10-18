@@ -6,4 +6,5 @@ class ScheduleDetail
   field :status_result, type: String
   field :response_message, type: String
   belongs_to :url_request_response
+  scope :include_associated_classes, includes(:url_request_response)
 end

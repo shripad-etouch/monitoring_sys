@@ -21,7 +21,7 @@
 	 <td><%#= schedule_detail.success_status %></td> 
 	 <td><%= schedule_detail.url_request_response.timeout %></td>
 	 <td><%= schedule_detail.start_time.to_s(:full_friendly) %></td>
-	 <td><%= schedule_detail.end_time %></td>
+	 <td><%= schedule_detail.end_time.to_s(:full_friendly) %></td>
 	 <td><%= schedule_detail.status_result %></td>
 	</tr>
 <% end %>
