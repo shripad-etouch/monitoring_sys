@@ -2,7 +2,7 @@ class UrlRequestResponsesController < ApplicationController
   # GET /url_request_responses
   # GET /url_request_responses.json
   def index
-    @url_request_responses = UrlRequestResponse.all
+    @url_request_responses = UrlRequestResponse.only(:url, :http_verb, :timeout, :object_type, :time_to_run)
 
     respond_to do |format|
       format.html # index.html.erb

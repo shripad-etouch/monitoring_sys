@@ -7,9 +7,37 @@
   </div>
 
   <div class="field">
-    <label for="http_verb"> Verb:</label>
-    <input type="text" name="http_verb" id="http_verb">
+    <label for="http_verb"> Verb:</label>    
+    <select name="http_verb" id="http_verb">
+      <option value="GET">GET</option>
+      <option value="POST">POST</option>      
+    </select> 
   </div>
+
+  <div class="field">
+    <label for="request_header"> Request Header:</label>
+    <textarea name="request_header" id="request_header" />
+  </div>
+
+  <div class="field">
+    <label for="request_body"> Request Body:</label>
+    <textarea name="request_body" id="request_body" />
+  </div>
+
+  <div class="field">
+    <label for="expected_response_header"> Expected Response Header:</label>
+    <textarea name="expected_response_header" id="expected_response_header" />
+  </div>
+
+  <div class="field">
+    <label for="expected_response_body"> Expected Response Body:</label>
+    <textarea name="expected_response_body" id="expected_response_body" />
+  </div>
+
+  <div class="field">
+    <label for="time_to_run"> Time to run:</label>
+    <input type="text" name="time_to_run" id="time_to_run" >
+  </div>  
 
   <div class="field">
     <label for="timeout"> Timeout:</label>
@@ -18,7 +46,9 @@
 
   <div class="field">
     <label for="object_type"> Object:</label>
-    <input type="text" name="object_type" id="object_type" >
+    <select name="object_type" id="object_type">
+      <option value="JSON">JSON</option>      
+    </select>
   </div>
 
   <div class="actions">
