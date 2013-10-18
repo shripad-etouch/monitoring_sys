@@ -17,7 +17,7 @@
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/monitoring_sys
-//= require bootstrap
+//= require twitter/bootstrap
 //= require_tree .
 
 

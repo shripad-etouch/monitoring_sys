@@ -1,6 +1,6 @@
 class MontioringSysController < ApplicationController
   def index
-      @http_verbs = Verb.all
-      @object_types = RequestObjectType.all
+      @http_verbs = {}
+      @object_types = {}
   end
 end
