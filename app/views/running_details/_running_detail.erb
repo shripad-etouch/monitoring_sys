@@ -1,5 +1,5 @@
-<table>
-  <tbody>
+<table id="schedule-running-details">
+  <thead>
     <tr>
      <th>URL</th>
      <th>Verb</th>
@@ -11,7 +11,7 @@
      <th>End Time</th>
      <th>Actual Status</th>
   	</tr>
-  </tbody>
+  </thead>
 <% schedule_details.each do |schedule_detail|%>
 	<tr>
 	 <td><%= schedule_detail.url_request_response.url %></td>
