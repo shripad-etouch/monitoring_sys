@@ -16,4 +16,5 @@ class MonitoringSys.Views.ScheduleDetails.PostView extends Backbone.View
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
+    
     return this

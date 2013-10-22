@@ -1,3 +1,3 @@
 
 $(document).ready () ->
-  $('#schedule-running-details').dataTable();
+  $('#schedule-running-details').dataTable()

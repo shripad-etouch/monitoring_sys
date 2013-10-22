@@ -16,5 +16,5 @@ class MonitoringSys.Views.ScheduleDetails.IndexView extends Backbone.View
   render: =>
     $(@el).html(@template(running_details: @options.running_details.toJSON() ))
     @addAll()
-
+    setTimeout (-> $('#schedule-running-details').dataTable({aoColumns: [null, null, null, null, null, null, null, null]})), 0
     return this
