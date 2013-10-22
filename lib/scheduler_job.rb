@@ -22,7 +22,7 @@ module SchedulerJob
   def schedule_job(obj, scheduler, schedule_at)
     #scheduler.at(schedule_at.to_s) do #During testing comment this line
     scheduler.every("10s") do #During testing uncomment this line
-      # Same job schedule it run to after one hour
+      # Schedule same job to run after one hour
       obj.update_attributes(:time_to_run => Time.parse(obj.time_to_run.to_s) + 60 * 60) #1 hour
       
       # Job execution start time.
@@ -79,12 +79,12 @@ module SchedulerJob
       if !response.headers.eql?(current_url_data.expected_response_header) || 
          !response.body.eql?(current_url_data.expected_response_body)
         schedule_detail.update_attributes(:end_time => Time.now, 
-                                          :status_result => !response.headers["status"].nil? ? response.headers["status"] : 
+                                          :status_result => !response.headers["status"].nil? ? "Not ok" : 
                                                                                                "Response status is empty",
                                           :response_message => "Request failed")
       else
         schedule_detail.update_attributes(:end_time => Time.now, 
-                                          :status_result => "As expected",
+                                          :status_result => "Ok",
                                           :response_message => "Request succeeded")
       end  
 
