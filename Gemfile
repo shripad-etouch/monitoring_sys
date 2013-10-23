@@ -35,6 +35,7 @@ gem "rails-backbone"
 gem 'rufus-scheduler'
 gem 'httparty'
 gem 'will_paginate_mongoid'
+gem 'backbone-relational-rails'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

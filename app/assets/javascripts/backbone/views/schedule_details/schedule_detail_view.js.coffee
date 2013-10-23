@@ -1,7 +1,7 @@
-MonitoringSys.Views.Posts ||= {}
+MonitoringSys.Views.ScheduleDetails ||= {}
 
-class MonitoringSys.Views.ScheduleDetails.PostView extends Backbone.View
-  template: JST["backbone/templates/schedule_details/post"]
+class MonitoringSys.Views.ScheduleDetails.ScheduleDetailView extends Backbone.View
+  template: JST["backbone/templates/schedule_details/schedule_detail"]
 
   events:
     "click .destroy" : "destroy"

@@ -1,4 +1,4 @@
-class MonitoringSys.Models.ScheduleDetail extends Backbone.Model
+class MonitoringSys.Models.ScheduleDetail extends Backbone.RelationalModel
   paramRoot: 'schedule_detail'
 
   defaults:
@@ -10,7 +10,7 @@ class MonitoringSys.Models.ScheduleDetail extends Backbone.Model
     start_time: null
     end_time: null
     status_result: null
-
+      
 class MonitoringSys.Collections.ScheduleDetailsCollection extends Backbone.Collection
   model: MonitoringSys.Models.ScheduleDetail
-  url: '/running_details'
+  url: '/schedule_details'

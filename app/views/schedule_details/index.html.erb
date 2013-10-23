@@ -1,0 +1,9 @@
+<div id="schedule_details"></div>
+<%#= @schedule_details.to_json %>
+<script type="text/javascript">
+  $(function() {
+  // Blog is the app name
+  window.router = new MonitoringSys.Routers.ScheduleDetailsRouter({schedule_details: <%= @schedule_details.to_json({include: :url_request_response}).html_safe -%>});
+  Backbone.history.start();
+  });
+</script>

@@ -10,5 +10,5 @@ class UrlRequestResponse
   field :timeout, type: String
   field :object_type, type: String
   field :time_to_run, type: DateTime
-  has_many :schedule_detail, dependent: :destroy
+  has_many :schedule_details, dependent: :destroy
 end
