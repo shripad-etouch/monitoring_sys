@@ -12,7 +12,6 @@ class MonitoringSys.Views.UrlRequestResponsesEditView extends Backbone.View
 
   render: ->
     console.log("hello")
-    debugger
     @$el.html @template(@model.toJSON())
     @
 

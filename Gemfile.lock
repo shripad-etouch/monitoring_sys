@@ -62,8 +62,6 @@ GEM
     less-rails (2.4.2)
       actionpack (>= 3.1)
       less (~> 2.4.0)
-    less-rails-bootstrap (3.0.3)
-      less-rails (~> 2.4.2)
     libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -139,6 +137,11 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    twitter-bootstrap-rails (2.2.8)
+      actionpack (>= 3.1)
+      execjs
+      rails (>= 3.1)
+      railties (>= 3.1)
     tzinfo (0.3.38)
     uglifier (2.2.1)
       execjs (>= 0.3.0)
@@ -159,7 +162,6 @@ DEPENDENCIES
   httparty
   jquery-rails
   less-rails
-  less-rails-bootstrap
   mongoid
   quiet_assets (>= 1.0.1)
   rails (= 3.2.14)
@@ -167,5 +169,6 @@ DEPENDENCIES
   rails_best_practices
   rufus-scheduler
   therubyracer
+  twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   will_paginate_mongoid

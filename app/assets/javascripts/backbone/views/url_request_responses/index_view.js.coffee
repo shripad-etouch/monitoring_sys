@@ -17,4 +17,5 @@ class MonitoringSys.Views.UrlRequestResponsesIndexView extends Backbone.View
 
 	render: ->
 	    @$el.html @template()
+	    setTimeout (-> $("table#url-request-response a").addClass("btn btn-link")),0
 	    @

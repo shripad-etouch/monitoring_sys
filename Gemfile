@@ -14,7 +14,8 @@ gem 'mongoid'
 # in production environments by default.
 group :assets do
   gem 'less-rails'
-  gem 'less-rails-bootstrap'
+  #gem 'less-rails-bootstrap'
+  gem "twitter-bootstrap-rails"
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
