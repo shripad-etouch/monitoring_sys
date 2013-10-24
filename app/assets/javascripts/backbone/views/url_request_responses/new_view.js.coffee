@@ -10,7 +10,15 @@ class MonitoringSys.Views.UrlRequestResponsesNewView extends Backbone.View
    @render()
 
  render: ->
-   @$el.html @template()
+  @$el.html @template()
+  setTimeout (-> 
+    $( -> 
+      $('#datetimepicker1').datetimepicker({
+        language: 'en',
+        pick12HourFormat: true
+      })
+    )
+  ), 0
 
  save: (e) ->
    e.preventDefault()
