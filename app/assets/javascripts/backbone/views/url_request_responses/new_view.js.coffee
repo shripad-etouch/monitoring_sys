@@ -27,7 +27,19 @@ class MonitoringSys.Views.UrlRequestResponsesNewView extends Backbone.View
    http_verb = $('#http_verb').val()
    timeout = $('#timeout').val()
    object_type = $('#object_type').val()
-   request_header = $('#request_header').val()
+   index_val = parseInt($(".request_headers_div").last().attr("index_val"))
+   actual_header = "{"
+   for i in [0..index_val] by 1
+    key = "request_header_key_"+i
+    val = "request_header_value_"+i
+    actual_header += "{"+$("#"+key).val()+"=>"+"'"+$("#"+val).val()+"'"+"}"
+    if(i!=index_val)
+      actual_header += ","
+    else
+      actual_header += "}"
+   alert(actual_header);
+   asadsadasdasdsd
+   request_header = actual_header
    request_body = $('#request_body').val()
    expected_response_header = $('#expected_response_header').val()
    expected_response_body = $('#expected_response_body').val()

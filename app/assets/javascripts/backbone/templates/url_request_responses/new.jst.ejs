@@ -20,10 +20,16 @@
                     <option value="POST">POST</option>      
                   </select> 
                 </div>
-
+                <div><a href="javascript:void(0)" class="add_request_headers">Add another request header</a></div>
                 <div class="form-group">
-                  <label class="label-style" for="request_header"> Request Header</label>
-                  <textarea class="form-control max-width" name="request_header" id="request_header" />
+                  <label class="label-style" for="request_header"> Request Header Key</label>
+                  <label class="label-style" for="request_header"> Request Header Value</label>                  
+                </div>
+                <div id="request_headers_main">
+                  <div class="form-group request_headers_div" index_val = 0>
+                    <input type="text" class="form-control" name="request_header_key_0" id="request_header_key_0"/>
+                    <input type="text" class="form-control" name="request_header_value_0" id="request_header_value_0" />
+                  </div>
                 </div>
 
                 <div class="form-group">
