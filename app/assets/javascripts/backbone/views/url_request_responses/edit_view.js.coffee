@@ -12,6 +12,14 @@ class MonitoringSys.Views.UrlRequestResponsesEditView extends Backbone.View
 
   render: ->
     @$el.html @template(@model.toJSON())
+    setTimeout (-> 
+      $( -> 
+        $('#datetimepicker2').datetimepicker({
+          language: 'en',
+          pick12HourFormat: true
+        })
+      )
+    ), 0
     @
 
   update: (e) ->

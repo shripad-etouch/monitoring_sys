@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require bootstrap-datetimepicker
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
