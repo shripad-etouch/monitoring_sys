@@ -13,6 +13,10 @@ class MonitoringSys.Models.UrlRequestResponse extends Backbone.RelationalModel
       includeInJSON: 'id'
   ]
 
+  validate: (attrs, options) ->
+    debugger
+    if !attrs.url
+      return "can't end before it starts"
   
 class MonitoringSys.Collections.UrlRequestResponsesCollection extends Backbone.Collection
   model: MonitoringSys.Models.UrlRequestResponse

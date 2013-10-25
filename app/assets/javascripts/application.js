@@ -16,6 +16,7 @@
 //= require bootstrap-datetimepicker
 //= require underscore
 //= require backbone
+//= inputValidator
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone-relational

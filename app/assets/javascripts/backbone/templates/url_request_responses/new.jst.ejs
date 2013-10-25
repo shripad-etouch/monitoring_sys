@@ -10,7 +10,7 @@
             <form id="new-url_request_response" name="url_request_response" role="form">
                 <div class="form-group">
                   <label class="label-style" for="url"> URL</label>
-                  <input class="form-control max-width" type="text" name="url" id="url" >
+                  <input data-input-group="new-schedule" data-req-message="Url is required" class="validate form-control max-width" type="text" name="url" id="url" >
                 </div>
 
                 <div class="form-group">
@@ -27,29 +27,29 @@
                 </div>
                 <div id="request_headers_main">
                   <div class="form-group request_headers_div" index_val = 0>
-                    <input type="text" class="form-control" name="request_header_key_0" id="request_header_key_0"/>
-                    <input type="text" class="form-control" name="request_header_value_0" id="request_header_value_0" />
+                    <input data-input-group="new-schedule" data-req-message="Request header key is required" type="text" class="validate form-control" name="request_header_key_0" id="request_header_key_0"/>
+                    <input data-input-group="new-schedule" data-req-message="Request header value is required" type="text" class="validate form-control" name="request_header_value_0" id="request_header_value_0" />
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="label-style" for="request_body"> Request Body</label>
-                  <textarea class="form-control max-width" name="request_body" id="request_body" />
+                  <textarea data-input-group="new-schedule" data-req-message="Request body is required" class="validate form-control max-width" name="request_body" id="request_body" />
                 </div>
 
                 <div class="form-group">
                   <label class="label-style" for="expected_response_header"> Expected Response Header</label>
-                  <textarea class="form-control max-width" name="expected_response_header" id="expected_response_header" />
+                  <textarea data-input-group="new-schedule" data-req-message="Expected response header is required" class="validate form-control max-width" name="expected_response_header" id="expected_response_header" />
                 </div>
 
                 <div class="form-group">
                   <label class="label-style" for="expected_response_body"> Expected Response Body</label>
-                  <textarea class="form-control max-width" name="expected_response_body" id="expected_response_body" />
+                  <textarea data-input-group="new-schedule" data-req-message="Expected Response Body is required" class="validate form-control max-width" name="expected_response_body" id="expected_response_body" />
                 </div>
                 <div class="well">
                   <label class="label-style" for="time_to_run"> Time to run</label>
                   <div id="datetimepicker1" class="input-append">
-                    <input data-format="MM/dd/yyyy HH:mm:ss PP" id="time_to_run" type="text"></input>
+                    <input data-input-group="new-schedule" data-req-message="Time to run is required" data-format="MM/dd/yyyy HH:mm:ss PP" id="time_to_run" type="text" class="validate"></input>
                     <span class="add-on">
                       <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                       </i>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-group">
                   <label class="label-style" for="timeout"> Timeout</label>
-                  <input type="text" class="form-control max-width" name="timeout" id="timeout" >
+                  <input data-input-group="new-schedule" data-req-message="Timeout is required" type="text" class="validate form-control max-width" name="timeout" id="timeout" >
                 </div>
 
                 <div class="form-group">
@@ -67,7 +67,7 @@
                     <option value="JSON">JSON</option>      
                   </select>
                 </div>
-                <input type="submit" value="Create URL" class="btn btn-default"/>
+                <input data-input-group="new-schedule" type="submit" value="Create URL" class="btn btn-default validate validate"/>
               </form>
           </div>
         <div class="modal-footer">

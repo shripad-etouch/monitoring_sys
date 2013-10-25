@@ -32,6 +32,7 @@ GEM
     awesome_print (1.2.0)
     backbone-relational-rails (0.8.6)
       railties (>= 3.1)
+    backbone-validation-rails (0.7.1.1)
     bootstrap-datetimepicker-rails (0.0.11)
     builder (3.0.4)
     bullet (4.6.0)
@@ -161,6 +162,7 @@ PLATFORMS
 
 DEPENDENCIES
   backbone-relational-rails
+  backbone-validation-rails
   bootstrap-datetimepicker-rails
   bullet
   coffee-rails (~> 3.2.1)
