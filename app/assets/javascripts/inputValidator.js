@@ -59,6 +59,7 @@
          * Remove all messages on the page.
          */
         $('.reqformError').remove();
+        $('#error-message-container').hide();
 
         /*
          * Get all elements within same group of current element.
@@ -137,9 +138,11 @@
      */
     setMessage = function(inputElm, message) {
         var p = $(inputElm).position();
-        $(inputElm).after(messageContainer);
-        $(".formErrorContent").html(message + "<br>");
-        $(".reqformError").css({top: p.top, left: p.left + $(inputElm).width() - 15});
+        $("#input-error").html(message);
+        $('#error-message-container').show();
+        //$(inputElm).after(messageContainer);
+        /*$(".formErrorContent").html(message + "<br>");
+        $(".reqformError").css({top: p.top, left: p.left + $(inputElm).width() - 15});*/
     },
 
     /*
@@ -160,6 +163,7 @@
          */
         debugger 
         disableSubmitButtonOnPageLoad();
+        $('#error-message-container').hide();
         $(".validate").live('keyup', inputValidator);
         $(".validate").live('blur', inputValidator);
     });
