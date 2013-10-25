@@ -3,15 +3,17 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
+          <div class="alert alert-error" id="error-message-container" style="display: none;">  
+            <strong>Error!</strong><div id="input-error"></div>  
+          </div>
           <a href="#index" class="close close-edit-url-modal" data-dismiss="modal" aria-hidden="true">&times;</a>
           <h4 class="modal-title">Edit URL Schedule</h4>
         </div>
         <div class="modal-body">
           <form id="edit-url_request_response" name="url_request_response">
-
             <div class="form-group">
               <label class="label-style" for="url"> URL</label>
-              <input type="text" class="form-control max-width" name="url" id="url" value="<%= url %>" >
+              <input type="text" data-input-group="new-schedule" data-req-message="Url is required" class="validate form-control max-width" name="url" id="url" value="<%= url %>" >
             </div>
 
             <div class="form-group">
@@ -24,27 +26,27 @@
 
             <div class="form-group">
               <label class="label-style" for="request_header"> Request Header</label>
-              <textarea class="form-control max-width" name="request_header" id="request_header"><%= request_header %></textarea>
+              <textarea data-input-group="new-schedule" data-req-message="Request header is required" class="validate form-control max-width" name="request_header" id="request_header"><%= request_header %></textarea>
             </div>
 
             <div class="form-group">
               <label class="label-style" for="request_body"> Request Body</label>
-              <textarea class="form-control max-width" name="request_body" id="request_body"><%= request_body %></textarea>
+              <textarea data-input-group="new-schedule" data-req-message="Request body is required" class="validate form-control max-width" name="request_body" id="request_body"><%= request_body %></textarea>
             </div>
 
             <div class="form-group">
               <label class="label-style" for="expected_request_header"> Expected Response Header</label>
-              <textarea class="form-control max-width" name="expected_response_header" id="expected_response_header"><%= expected_response_header %></textarea>
+              <textarea data-input-group="new-schedule" data-req-message="Expected response header is required" class="validate form-control max-width" name="expected_response_header" id="expected_response_header"><%= expected_response_header %></textarea>
             </div>
 
             <div class="form-group">
               <label class="label-style" for="expected_response_body"> Expected Response Body</label>
-              <textarea class="form-control max-width" name="expected_response_body" id="expected_response_body"><%= expected_response_body %></textarea>
+              <textarea data-input-group="new-schedule" data-req-message="Expected Response Body is required" class="validate form-control max-width" name="expected_response_body" id="expected_response_body"><%= expected_response_body %></textarea>
             </div>
             <div class="well">
               <label class="label-style" for="time_to_run"> Time to run</label>
               <div id="datetimepicker2" class="input-append">
-                <input data-format="MM/dd/yyyy HH:mm:ss PP" id="time_to_run" type="text" value = "<%= time_to_run %>"></input>
+                <input class="validate" data-input-group="new-schedule" data-req-message="Time to run is required" data-format="MM/dd/yyyy HH:mm:ss PP" id="time_to_run" type="text" value = "<%= time_to_run %>"></input>
                 <span class="add-on">
                   <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                   </i>
@@ -53,7 +55,7 @@
             </div>
             <div class="form-group">
               <label class="label-style" for="timeout"> Timeout</label>
-              <input class="form-control max-width" type="text" name="timeout" id="timeout" value="<%= timeout %>">
+              <input data-input-group="new-schedule" data-req-message="Timeout is required" class="validate form-control max-width" type="text" name="timeout" id="timeout" value="<%= timeout %>">
             </div>
 
             <div class="form-group">
@@ -62,7 +64,7 @@
                 <option value="JSON" "<%if (http_verb == 'JSON') { %>  selected = true <% } %>">JSON</option>      
               </select>
             </div>
-            <input type="submit" value="Update URL" class="btn btn-default"/>
+            <input data-input-group="new-schedule" type="submit" value="Update URL" class="btn btn-default"/>
           </form>
         </div>
         <div class="modal-footer">
