@@ -34,13 +34,12 @@ class MonitoringSys.Views.UrlRequestResponsesNewView extends Backbone.View
    for i in [0..index_val] by 1
     key = "request_header_key_"+i
     val = "request_header_value_"+i
-    actual_header += "{"+$("#"+key).val()+"=>"+"'"+$("#"+val).val()+"'"+"}"
+    actual_header += "'"+$("#"+key).val()+"'"+": "+"'"+$("#"+val).val()+"'"
     if(i!=index_val)
       actual_header += ","
     else
       actual_header += "}"
    alert(actual_header);
-   asadsadasdasdsd
    request_header = actual_header
    request_body = $('#request_body').val()
    expected_response_header = $('#expected_response_header').val()
