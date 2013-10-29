@@ -2,7 +2,7 @@ $(".add_request_headers").live("click", function(){
     old_index = parseInt($(".request_headers_div").last().attr("index_val"));
     /* Keep only one remove icon. */
     var removeLinks = $(".request_headers_div").last().children(".remove_link_div");
-    for(var i=1; i<removeLinks.length; i++){
+    for(var i=1; i<removeLinks.length; i++) {
         removeLinks[i].remove();
     }
     $(".request_headers_div").last().clone().appendTo("#request_headers_main");

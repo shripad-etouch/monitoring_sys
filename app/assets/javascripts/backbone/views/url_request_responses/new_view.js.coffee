@@ -51,4 +51,13 @@ class MonitoringSys.Views.UrlRequestResponsesNewView extends Backbone.View
         success: (url_request_response) =>
           @model = url_request_response
           window.location.hash = "/#{@model.id}"
-
+        error: (model, xhr, options) =>
+          if xhr.responseText
+            err = JSON.parse(xhr.responseText) 
+            errors = ""
+            for i of err
+              errors += ", " + err[i][0]
+            errors = errors.substr(1, errors.length)
+            $("#input-error").html errors
+            $("#error-message-container").show()
+            $("#error-message-container").delay(5000).fadeOut "slow"
