@@ -13,7 +13,7 @@
           <form id="edit-url_request_response" name="url_request_response">
             <div class="form-group">
               <label class="label-style" for="url"> URL</label>
-              <input type="text" data-input-group="new-schedule" data-req-message="Url is required" class="validate form-control max-width" name="url" id="url" value="<%= url %>" >
+              <input type="text" data-input-group="new-schedule" data-req-message="Url is required" data-secondary-check="url" class="validate form-control max-width" name="url" id="url" value="<%= url %>" >
             </div>
 
             <div class="form-group">
@@ -64,7 +64,7 @@
                 <option value="JSON" "<%if (http_verb == 'JSON') { %>  selected = true <% } %>">JSON</option>      
               </select>
             </div>
-            <input data-input-group="new-schedule" type="submit" value="Update URL" class="btn btn-default"/>
+            <input type="submit" value="Update URL" data-secondary-check="onlyNumbers"  class="new-schedule-disable-validate btn btn-default"/>
           </form>
         </div>
         <div class="modal-footer">

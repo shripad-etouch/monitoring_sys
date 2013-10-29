@@ -7,7 +7,8 @@
         "multiEmail": /^(([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})+\,(\s)?)*(([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4}))+$/,
         "singleEmail": /^(([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4}))+$/,
         "onlyLetters": /^[a-zA-Z ]*$/,
-        "onlyNumbers": /^[0-9]+$/
+        "onlyNumbers": /^[0-9]+$/,
+        "url": /^(ht|f)tps?:\/\/[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/
     };
 
     /*
@@ -18,7 +19,8 @@
         "singleEmail": "Invalid email address",
         "multiEmail": "Invalid email address, you can add multiple ',' separated addresses",
         "onlyLetters": "Only letters allowed",
-        "onlyNumbers": "Only numbers allowed"
+        "onlyNumbers": "Only numbers allowed",
+        "url": "Please enter valid URL"
     };
 
     var messageContainer = 
@@ -69,8 +71,7 @@
         /*
          * Get all buttons in current form.
          */
-        iGrpButtons = 
-            $("input[type='button']input[type='submit'][data-input-group='" + iGroup + "']");
+        iGrpButtons = $("." + iGroup + "-validate");
         /*
          * Initially disable all buttons matching the group.
          */
@@ -122,9 +123,6 @@
          * If allIsWell true enable subsmit button matching the group.
          */
         if(allIsWell) {
-            /*
-             * Initially disable all buttons matching the group.
-             */
             for(var k = 0; k < iGrpButtons.length; k += 1) {
                 $(iGrpButtons[k]).removeAttr("disabled");
             }
@@ -161,7 +159,6 @@
         /*
          * Initially submit botton will be disabled 
          */
-        debugger 
         disableSubmitButtonOnPageLoad();
         $('#error-message-container').hide();
         $(".validate").live('keyup', inputValidator);

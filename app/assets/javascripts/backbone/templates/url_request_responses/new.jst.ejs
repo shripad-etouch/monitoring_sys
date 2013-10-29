@@ -13,7 +13,7 @@
             <form id="new-url_request_response" name="url_request_response" role="form">
                 <div class="form-group">
                   <label class="label-style" for="url"> URL</label>
-                  <input data-input-group="new-schedule" data-req-message="Url is required" class="validate form-control max-width" type="text" name="url" id="url" >
+                  <input data-input-group="new-schedule" data-req-message="Url is required" data-secondary-check="url" class="validate form-control max-width" type="text" name="url" id="url" >
                 </div>
 
                 <div class="form-group">
@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-group">
                   <label class="label-style" for="timeout"> Timeout</label>
-                  <input data-input-group="new-schedule" data-req-message="Timeout is required" type="text" class="validate form-control max-width" name="timeout" id="timeout" >
+                  <input data-input-group="new-schedule" data-secondary-check="onlyNumbers" data-req-message="Timeout is required" type="text" class="validate form-control max-width" name="timeout" id="timeout" >
                 </div>
 
                 <div class="form-group">
@@ -70,7 +70,7 @@
                     <option value="JSON">JSON</option>      
                   </select>
                 </div>
-                <input data-input-group="new-schedule" type="submit" value="Create URL" class="btn btn-default validate validate"/>
+                <input type="submit" value="Create URL" class="new-schedule-validate btn btn-default validate validate"/>
               </form>
           </div>
         <div class="modal-footer">
